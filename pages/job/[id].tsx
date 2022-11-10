@@ -40,54 +40,80 @@ const Job = ({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   return (
     <div className="bg-white w-full flex justify-center">
-      <div className="w-[1200px] mt-14 flex gap-32">
-        <div className="w-2/3 flex flex-col">
-          <section className="flex justify-between pb-2 border-b mb-8">
-            <h1 className="font-bold text-3xl">Job Details</h1>
-            <div className="flex gap-8">
-              <span className="flex gap-4 items-center">
+      <div className="max-w-[1200px] w-full lg:mt-14 pt-6 lg:pt-0 px-4 lg:pl-0 flex flex-col lg:flex-row lg:gap-32">
+        <div className="w-full lg:w-2/3 flex flex-col">
+          <section className="flex flex-col justify-between pb-2 mb-8 lg:flex-row lg:border-b">
+            <h1 className="font-bold text-3xl border-b pb-3 lg:border-none lg:pb-0">
+              Job Details
+            </h1>
+            <div className="flex flex-row gap-8 pt-6 lg:pt-0">
+              <span className="flex flex-row gap-4 items-center">
                 <BookmarkIcon />
                 Save to my list
               </span>
-              <span className="flex gap-4 items-center">
+              <span className="flex flex-row gap-4 items-center">
                 <ShareIcon />
                 Share
               </span>
             </div>
           </section>
 
-          <div className="mb-8">
+          <div className="hidden lg:block mb-8">
             <PrimaryButton>Apply now</PrimaryButton>
           </div>
           <div className="flex gap-14 mb-2">
-            <h2 className="font-bold text-2xl text-lviv">{job.title}</h2>
-            <div className="flex flex-col w-1/3">
+            <h2 className="font-bold text-2xl text-lviv max-w-[500px] w-full">
+              {job.title}
+            </h2>
+            <div className="hidden lg:flex lg:flex-col">
               <span className="font-bold text-xl text-lviv">{job.salary}</span>
               <span className="text-lg text-lviv">Brutto, per year</span>
             </div>
           </div>
-          <span className="mb-2 text-lg text-lviv opacity-30">
-            Posted {dayjs().to(dayjs(job.createdAt))}
-          </span>
-          <div className="text-lg text-lviv mb-8">{job.description}</div>
+          <div className="flex justify-between items-center">
+            <span className="mb-2 text-lg text-lviv opacity-30">
+              Posted {dayjs().to(dayjs(job.createdAt))}
+            </span>
+            <div className="flex flex-col items-end w-1/3 mb-3 lg:hidden">
+              <span className="text-lg text-lviv">Brutto, per year</span>
+              <span className="font-bold text-xl text-lviv">{job.salary}</span>
+            </div>
+          </div>
+          <div className="text-lg text-lviv mb-11 lg:mb-8">
+            {job.description}
+          </div>
           <span className="font-bold text-xl text-lviv mb-2">
             Responsibilities
           </span>
           <div className="text-lg text-lviv mb-8">{job.description}</div>
-          <span className="font-bold text-xl text-lviv mb-2">
+          <span className="font-bold text-xl text-lviv my-3.5 lg:mb-2">
             Compensation & Benefits:
           </span>
-          <ul className="list-square">
+          <ul className="list-square pl-3.5 lg:pl-0">
             {job.benefits.map((benef) => (
-              <li className="text-lg text-lviv mb-8" key={`${benef}-upper`}>
+              <li className="text-lg text-lviv" key={`${benef}-upper`}>
                 {benef}
               </li>
             ))}
           </ul>
-          <div className="mb-20">
+          <div className="flex justify-center mb-20 mt-8 lg:block">
             <PrimaryButton>Apply now</PrimaryButton>
           </div>
-          <section className="flex justify-between pb-2 border-b mb-2">
+          <div className="block mb-14 lg:hidden">
+            <section className="flex justify-between pb-4 border-b mb-6">
+              <h1 className="font-bold text-3xl mt-28">Attached images</h1>
+            </section>
+            <div className="flex gap-2">
+              {job.pictures.map((pic) => (
+                <div
+                  key={pic}
+                  className="w-[200px] h-[116px] bg-cover rounded-lg"
+                  style={{ background: `url(${pic})` }}
+                ></div>
+              ))}
+            </div>
+          </div>
+          <section className="flex justify-between pb-4 mb-6 border-b lg:mb-2 lg:pb-2">
             <h1 className="font-bold text-3xl">Additional info</h1>
           </section>
           <span className="text-lg text-lviv mb-2">Employment type</span>
@@ -102,27 +128,32 @@ const Job = ({
               <WarningTag key={benef}>{benef}</WarningTag>
             ))}
           </div>
-          <section className="flex justify-between pb-2 border-b mb-8">
-            <h1 className="font-bold text-3xl mt-28">Attached images</h1>
-          </section>
-          <div className="flex gap-2">
-            {job.pictures.map((pic) => (
-              <div
-                key={pic}
-                className="w-[200px] h-[116px] bg-cover rounded-lg"
-                style={{ background: `url(${pic})` }}
-              ></div>
-            ))}
+          <div className="hidden lg:block">
+            <section className="flex justify-between pb-2 border-b mb-8">
+              <h1 className="font-bold text-3xl mt-28">Attached images</h1>
+            </section>
+            <div className="flex gap-2">
+              {job.pictures.map((pic) => (
+                <div
+                  key={pic}
+                  className="w-[200px] h-[116px] bg-cover rounded-lg"
+                  style={{ background: `url(${pic})` }}
+                ></div>
+              ))}
+            </div>
           </div>
           <Link
             href="/"
-            className="flex items-center justify-around w-[213px] h-[50px] bg-berezovytsia text-ternopil text-xs font-semibold rounded-lg mt-24 mb-40 ml-[-60px]"
+            className="hidden lg:flex items-center justify-around w-[213px] h-[50px] bg-berezovytsia text-ternopil text-xs font-semibold rounded-lg mt-24 mb-40 ml-[-60px]"
           >
             <ArrowIcon />
             RETURN TO JOB BOARD
           </Link>
         </div>
-        <div className="w-1/3">
+        <div className="max-w-[376px] w-full lg:w-1/3">
+          <section className="flex justify-between pb-4 mb-6 mt-16 border-b lg:hidden">
+            <h1 className="font-bold text-3xl">Contacts</h1>
+          </section>
           <div className="rounded-lg overflow-hidden bg-kyiv relative before:absolute before:content-[''] before:w-[273px] before:h-[273px] before:left-[-20%] before:top-[-20px] before:rounded-full before:bg-svalava">
             <div className="flex py-8 px-14 flex-col relative">
               <h2 className="font-bold text-xl text-white">Department name.</h2>
@@ -140,6 +171,15 @@ const Job = ({
               alt="temp"
             />
           </div>
+        </div>
+        <div className="flex justify-start">
+            <Link
+              href="/"
+              className="flex items-center justify-around w-[213px] h-[50px] bg-berezovytsia text-ternopil text-xs font-semibold rounded-lg mt-24 mb-40 lg:hidden"
+            >
+              <ArrowIcon />
+              RETURN TO JOB BOARD
+            </Link>
         </div>
       </div>
     </div>
