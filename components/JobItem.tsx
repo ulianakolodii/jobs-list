@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { Job } from "../api/jobs";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 import StarIcon from "!svg-react-loader!../icons/star.svg";
 import PinIcon from "!svg-react-loader!../icons/pin.svg";
 import BookmarkIcon from "!svg-react-loader!../icons/bookmark.svg";
@@ -24,7 +26,7 @@ const JobItem = ({ id, title, name, address, pictures }: Job) => {
             <StarIcon />
           </div>
           <span className="text-mukachevo text-sm font-light">
-            Posted 2 days ago
+            Posted {dayjs().to(dayjs(job.createdAt))}
           </span>
         </div>
         <Link
