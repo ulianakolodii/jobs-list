@@ -6,7 +6,9 @@ import StarIcon from "!svg-react-loader!../icons/star.svg";
 import PinIcon from "!svg-react-loader!../icons/pin.svg";
 import BookmarkIcon from "!svg-react-loader!../icons/bookmark.svg";
 
-const JobItem = ({ id, title, name, address, pictures }: Job) => {
+dayjs.extend(relativeTime);
+
+const JobItem = ({ id, title, name, address, pictures, createdAt }: Job) => {
   return (
     <div className="bg-odesa max-w-7xl w-full shadow-md rounded-3xl flex px-4 py-3.5 sm:bg-white sm:py-6">
       <div>
@@ -26,7 +28,7 @@ const JobItem = ({ id, title, name, address, pictures }: Job) => {
             <StarIcon />
           </div>
           <span className="text-mukachevo text-sm font-light">
-            Posted {dayjs().to(dayjs(job.createdAt))}
+            Posted {dayjs().to(dayjs(createdAt))}
           </span>
         </div>
         <Link
@@ -54,7 +56,7 @@ const JobItem = ({ id, title, name, address, pictures }: Job) => {
         <div className="flex flex-col justify-between items-end">
           <BookmarkIcon className="mr-2" />
           <span className="text-mukachevo text-sm font-light">
-            Posted 2 days ago
+            Posted {dayjs().to(dayjs(createdAt))}
           </span>
         </div>
       </div>
