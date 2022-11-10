@@ -15,6 +15,7 @@ dayjs.extend(relativeTime);
 
 export const getServerSideProps: GetServerSideProps<{
   job: Job;
+  apiKey: string;
 }> = async ({ params }) => {
   if (params) {
     const jobs = await fetchJobs();
@@ -25,6 +26,7 @@ export const getServerSideProps: GetServerSideProps<{
         return {
           props: {
             job,
+            apiKey: process.env.API_KEY || "",
           },
         };
       }
@@ -37,6 +39,7 @@ export const getServerSideProps: GetServerSideProps<{
 
 const Job = ({
   job,
+  apiKey,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   return (
     <div className="bg-white w-full flex justify-center">
@@ -167,19 +170,19 @@ const Job = ({
             </div>
             <img
               className="relative"
-              src="https://via.placeholder.com/402x218"
-              alt="temp"
+              src={`https://maps.googleapis.com/maps/api/staticmap?center=${job.location.lat},${job.location.long}&zoom=12&size=402x218&maptype=roadmap&key=${apiKey}&style=element%3Ageometry%7Ccolor%3A0x242f3e&style=element%3Alabels.text.stroke%7Ccolor%3A0x242f3e&style=element%3Alabels.text.fill%7Ccolor%3A0x746855&style=feature%3Aadministrative.locality%7Celement%3Alabels.text.fill%7Ccolor%3A0xd59563&style=feature%3Apoi%7Celement%3Alabels.text.fill%7Ccolor%3A0xd59563&style=feature%3Apoi.park%7Celement%3Ageometry%7Ccolor%3A0x263c3f&style=feature%3Apoi.park%7Celement%3Alabels.text.fill%7Ccolor%3A0x6b9a76&style=feature%3Aroad%7Celement%3Ageometry%7Ccolor%3A0x38414e&style=feature%3Aroad%7Celement%3Ageometry.stroke%7Ccolor%3A0x212a37&style=feature%3Aroad%7Celement%3Alabels.text.fill%7Ccolor%3A0x9ca5b3&style=feature%3Aroad.highway%7Celement%3Ageometry%7Ccolor%3A0x746855&style=feature%3Aroad.highway%7Celement%3Ageometry.stroke%7Ccolor%3A0x1f2835&style=feature%3Aroad.highway%7Celement%3Alabels.text.fill%7Ccolor%3A0xf3d19c&style=feature%3Atransit%7Celement%3Ageometry%7Ccolor%3A0x2f3948&style=feature%3Atransit.station%7Celement%3Alabels.text.fill%7Ccolor%3A0xd59563&style=feature%3Awater%7Celement%3Ageometry%7Ccolor%3A0x17263c&style=feature%3Awater%7Celement%3Alabels.text.fill%7Ccolor%3A0x515c6d&style=feature%3Awater%7Celement%3Alabels.text.stroke%7Ccolor%3A0x17263c&signature=5fwJL_J6_aHiK1fHNk4uVFGbkFM=`}
+              alt="location"
             />
           </div>
         </div>
         <div className="flex justify-start">
-            <Link
-              href="/"
-              className="flex items-center justify-around w-[213px] h-[50px] bg-berezovytsia text-ternopil text-xs font-semibold rounded-lg mt-24 mb-40 lg:hidden"
-            >
-              <ArrowIcon />
-              RETURN TO JOB BOARD
-            </Link>
+          <Link
+            href="/"
+            className="flex items-center justify-around w-[213px] h-[50px] bg-berezovytsia text-ternopil text-xs font-semibold rounded-lg mt-24 mb-40 lg:hidden"
+          >
+            <ArrowIcon />
+            RETURN TO JOB BOARD
+          </Link>
         </div>
       </div>
     </div>
